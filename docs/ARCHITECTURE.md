@@ -170,7 +170,7 @@ Browser → Ingress → frontend (Nginx + React build)
 
 ## Enkripsi
 
-- Library: `cryptography` — Fernet (AES-128-CBC + HMAC, production-safe)
+- Library: `cryptography` — Fernet (AES-128-CBC + HMAC-SHA256, production-safe)
 - **Semua value dienkripsi**, tidak hanya yang sensitif
 - `is_sensitive` hanya flag untuk UI (tampilkan sebagai `***` by default)
 - Key disimpan di environment variable `ENCRYPTION_KEY`
@@ -211,6 +211,40 @@ Nested key di-flatten ke dot-notation: `{"db": {"host": "localhost"}}` → `db.h
 ## CORS
 
 Sementara allow all (`*`). Akan diganti setelah domain production ditentukan.
+
+---
+
+## Autentikasi & Authorization
+
+- **Mekanisme**: JWT (JSON Web Token) via `python-jose`
+- **Login**: endpoint `/api/v1/auth/login` — menerima username/password, return JWT
+- **Token**: expired dalam 24 jam, simpan di localStorage frontend
+- **Middleware**: semua endpoint `/api/v1/` (kecuali `/auth/*` dan `/health`) require valid JWT
+- **Password**: di-hash dengan bcrypt sebelum disimpan di database
+
+### Tabel `users`
+| Kolom | Tipe | Keterangan |
+|---|---|---|
+| id | INT PK AUTO_INCREMENT | |
+| username | VARCHAR(50) UNIQUE | |
+| password_hash | VARCHAR(255) | bcrypt hash |
+| role | ENUM('admin', 'viewer') | |
+| created_at | DATETIME | |
+| last_login | DATETIME | Nullable |
+
+### Role & Permission
+| Role | Aktivitas |
+|---|---|
+| admin | Upload config, edit, delete, manage users |
+| editor | Upload config, edit, delete (tanpa manage users) |
+| viewer | View only, export config |
+
+### Environment Variables
+```
+JWT_SECRET_KEY=<random-secret>
+JWT_ALGORITHM=HS256
+JWT_EXPIRE_MINUTES=1440
+```
 
 ---
 
