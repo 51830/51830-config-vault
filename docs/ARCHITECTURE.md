@@ -14,6 +14,19 @@ balik ke format aslinya.
 
 ---
 
+## Fitur Utama
+
+1. Upload file config via Web UI
+2. Parser otomatis berdasarkan ekstensi file
+3. User memilih key-value mana yang disimpan ke DB (`is_selected`)
+4. Versioning per aplikasi (v1, v2, v3...)
+5. Perbandingan nilai antar versi (diff viewer)
+6. Enkripsi value sensitif di DB, bisa didekripsi saat ditampilkan
+7. Export balik ke format asli (.env, .json, .yaml, dll)
+8. Form tambahan: nama aplikasi, note, deskripsi
+
+---
+
 ## Tech Stack
 
 | Layer | Teknologi |
@@ -228,7 +241,7 @@ Sementara allow all (`*`). Akan diganti setelah domain production ditentukan.
 | id | INT PK AUTO_INCREMENT | |
 | username | VARCHAR(50) UNIQUE | |
 | password_hash | VARCHAR(255) | bcrypt hash |
-| role | ENUM('admin', 'viewer') | |
+| role | ENUM('admin', 'editor', 'viewer') | |
 | created_at | DATETIME | |
 | last_login | DATETIME | Nullable |
 
