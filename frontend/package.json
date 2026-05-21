@@ -14,7 +14,7 @@
     "axios": "^1.7.7",
     "zustand": "^4.5.5",
     "@tanstack/react-table": "^8.20.5",
-    "react-diff-viewer": "^3.1.1",
+    "react-diff-viewer-continued": "^3.4.0",
     "react-hook-form": "^7.53.0"
   },
   "devDependencies": {
