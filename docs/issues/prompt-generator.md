@@ -106,3 +106,42 @@ Ikuti format yang sama.
 - Sertakan code snippet lengkap
 - Untuk issue terkait frontend, gunakan JavaScript/JSX (bukan TypeScript)
 - Verifikasi harus realistis dan bisadicheck manually
+
+## WAJIB: Semua Perintah dalam Konteks Docker
+
+Project ini berjalan **sepenuhnya di dalam Docker Compose**. Jangan pernah menulis perintah yang mengasumsikan Python terinstall di local PC.
+
+Aturan perintah:
+
+1. **Menjalankan Python** → selalu gunakan:
+   ```
+   docker compose exec backend python -c "..."
+   docker compose exec backend python -m app.seed   # BUKAN python app/seed.py
+   ```
+
+2. **Menambahkan dependency** → tulis instruksi edit `backend/requirements.txt` lalu rebuild container:
+   ```
+   docker compose up --build -d backend
+   ```
+   Jangan pernah menulis `pip install`.
+
+3. **Migration / Alembic** → selalu melalui container:
+   ```
+   docker compose exec backend python -m alembic ...
+   ```
+
+4. **Curl ke API** → gunakan `localhost` (port sudah di-map oleh Docker):
+   ```
+   curl http://localhost:8000/...
+   ```
+
+5. **Rebuild container setelah perubahan kode** → selalu sertakan langkah:
+   ```
+   docker compose up --build -d backend
+   ```
+   (atau `docker compose restart backend` jika hanya perubahan file Python, tanpa dependency baru)
+
+6. **Restart container** (tanpa build, hanya untuk reload kode):
+   ```
+   docker compose restart backend
+   ```
