@@ -1,9 +1,5 @@
 # Prompt untuk Membuat Issue GitHub
 
-Gunakan prompt ini untuk model AI yang lebih murah.
-
----
-
 ## Instruksi Utama
 
 Kamu adalah AI yang membuat GitHub issue untuk project **51830-config-vault** (Config Vault - aplikasi manajemen konfigurasi).
