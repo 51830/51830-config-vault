@@ -845,3 +845,99 @@ body {
   background-color: #dcfce7;
   color: #15803d;
 }
+
+/* KeyValueTable (TanStack) */
+.key-value-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.key-value-table-wrapper .key-value-table th {
+  background: #f5f5f5;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.key-value-table-wrapper .key-value-table td {
+  padding: 10px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: middle;
+}
+
+.key-value-table-wrapper .key-value-table tr:last-child td {
+  border-bottom: none;
+}
+
+.key-value-table-wrapper .key-value-table tr:hover {
+  background: #fafafa;
+}
+
+.key-cell {
+  background: #f0f0f0;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: 'Consolas', 'Courier New', monospace;
+  word-break: break-all;
+}
+
+.value-cell {
+  cursor: pointer;
+  min-height: 24px;
+  color: #333;
+}
+
+.value-cell:hover {
+  color: #1976d2;
+}
+
+.edit-cell {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.edit-input {
+  flex: 1;
+  padding: 4px 8px;
+  border: 1px solid #1976d2;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: 'Consolas', 'Courier New', monospace;
+}
+
+.edit-cell button {
+  padding: 2px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+}
+
+.edit-cell button:hover {
+  background: #f0f0f0;
+}
+
+/* SensitiveBadge scoped inside KeyValueTable */
+.key-value-table-wrapper .badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.key-value-table-wrapper .badge-sensitive {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.key-value-table-wrapper .badge-normal {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
