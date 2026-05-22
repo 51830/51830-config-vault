@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage';
 import AppsPage from './pages/AppsPage';
 import AppDetailPage from './pages/AppDetailPage';
 import UploadPage from './pages/UploadPage';
+import ConfigReviewPage from './pages/ConfigReviewPage';
 import useAppStore from './store/useAppStore';
 
 function ProtectedRoute({ children }) {
@@ -47,7 +48,7 @@ export default function App() {
           path="/apps/:id/review/:configId"
           element={
             <ProtectedRoute>
-              <div>Review Page (coming soon)</div>
+              <ConfigReviewPage />
             </ProtectedRoute>
           }
         />
