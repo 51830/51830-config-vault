@@ -451,6 +451,12 @@ body {
   border-color: #d1d5db;
 }
 
+.export-error {
+  color: #dc2626;
+  font-size: 11px;
+  margin-left: 6px;
+}
+
 .error-state {
   text-align: center;
   padding: 60px 20px;

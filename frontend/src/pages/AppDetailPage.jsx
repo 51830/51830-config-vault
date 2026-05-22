@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import useAppStore from '../store/useAppStore';
+import ExportButton from '../components/ExportButton';
 
 export default function AppDetailPage() {
   const { id } = useParams();
@@ -94,6 +95,7 @@ export default function AppDetailPage() {
                         Diff
                       </button>
                     )}
+                    <ExportButton configFileId={cf.id} filename={cf.filename} />
                   </td>
                 </tr>
               ))}
