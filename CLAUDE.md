@@ -67,7 +67,7 @@ backend/app/
 3. Rebuild/restart container jika perlu
 4. Verifikasi dengan perintah di bagian Verification issue
 5. **WAJIB: git add, git commit, git push ke origin/main**
-6. **WAJIB: tutup issue dengan `gh issue close <number> -m "..."`**
+6. **WAJIB: tutup issue dengan `gh issue close <number> -c "..."`**
 
 ## Catatan Khusus
 
