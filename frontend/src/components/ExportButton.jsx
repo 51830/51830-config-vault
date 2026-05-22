@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import apiClient from '../api/client';
 
-export default function ExportButton({ configFileId, filename }) {
+export default function ExportButton({ configFileId, appName, version, fileType }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -16,8 +16,8 @@ export default function ExportButton({ configFileId, filename }) {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      const ext = filename.split('.').pop();
-      link.setAttribute('download', `config-${configFileId}.${ext}`);
+      const slug = (appName || 'config').toLowerCase().replace(/\s+/g, '-');
+      link.setAttribute('download', `${slug}-v${version}.${fileType}`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

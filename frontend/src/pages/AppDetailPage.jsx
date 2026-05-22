@@ -95,7 +95,12 @@ export default function AppDetailPage() {
                         Diff
                       </button>
                     )}
-                    <ExportButton configFileId={cf.id} filename={cf.filename} />
+                    <ExportButton
+                      configFileId={cf.id}
+                      appName={app.name}
+                      version={cf.version}
+                      fileType={cf.file_type}
+                    />
                   </td>
                 </tr>
               ))}
