@@ -767,3 +767,81 @@ body {
   margin-bottom: 20px;
   font-size: 14px;
 }
+
+/* Diff Page */
+.diff-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.diff-info {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.diff-info .version-badge.compare {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+.diff-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.diff-section h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.diff-title.added { color: #16a34a; }
+.diff-title.removed { color: #dc2626; }
+.diff-title.changed { color: #d97706; }
+
+.diff-table td code {
+  background-color: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 13px;
+  font-family: monospace;
+  word-break: break-all;
+}
+
+.diff-added {
+  background-color: #f0fdf4;
+}
+
+.diff-added:hover {
+  background-color: #dcfce7 !important;
+}
+
+.diff-removed {
+  background-color: #fef2f2;
+}
+
+.diff-removed:hover {
+  background-color: #fee2e2 !important;
+}
+
+.diff-changed {
+  background-color: #fffbeb;
+}
+
+.diff-changed:hover {
+  background-color: #fef3c7 !important;
+}
+
+.diff-changed .old-value code {
+  background-color: #fee2e2;
+  color: #991b1b;
+  text-decoration: line-through;
+}
+
+.diff-changed .new-value code {
+  background-color: #dcfce7;
+  color: #15803d;
+}

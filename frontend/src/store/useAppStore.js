@@ -96,6 +96,18 @@ const useAppStore = create((set, get) => ({
     return response.data;
   },
 
+  fetchDecryptedItem: async (itemId) => {
+    const response = await apiClient.get(`/api/v1/configs/items/${itemId}?decrypt=true`);
+    return response.data;
+  },
+
+  fetchItemsForDiff: async (configId) => {
+    const response = await apiClient.get(`/api/v1/configs/${configId}/items`, {
+      params: { per_page: 500 },
+    });
+    return response.data;
+  },
+
   updateConfigItem: async (itemId, data) => {
     const response = await apiClient.put(`/api/v1/configs/items/${itemId}`, data);
     return response.data;

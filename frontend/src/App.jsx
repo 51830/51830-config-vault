@@ -5,6 +5,7 @@ import AppsPage from './pages/AppsPage';
 import AppDetailPage from './pages/AppDetailPage';
 import UploadPage from './pages/UploadPage';
 import ConfigReviewPage from './pages/ConfigReviewPage';
+import DiffPage from './pages/DiffPage';
 import useAppStore from './store/useAppStore';
 
 function ProtectedRoute({ children }) {
@@ -56,7 +57,7 @@ export default function App() {
           path="/apps/:id/diff/:configId"
           element={
             <ProtectedRoute>
-              <div>Diff Page (coming soon)</div>
+              <DiffPage />
             </ProtectedRoute>
           }
         />
