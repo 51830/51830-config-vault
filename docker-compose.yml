@@ -5,6 +5,8 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - "8000:8000"
+    environment:
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY}
     env_file:
       - .env
     volumes:
