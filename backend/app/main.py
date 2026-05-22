@@ -4,6 +4,7 @@ from app.config import settings
 from app.database import engine, SessionLocal, Base
 from app.middleware.auth_middleware import auth_middleware
 from app.routers import auth as auth_router
+from app.routers import apps as apps_router
 from app.seed import seed_admin
 
 app = FastAPI(title="Config Vault API")
@@ -19,6 +20,7 @@ app.add_middleware(
 app.middleware("http")(auth_middleware)
 
 app.include_router(auth_router.router)
+app.include_router(apps_router.router)
 
 
 @app.on_event("startup")
