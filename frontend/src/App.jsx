@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
+import AppsPage from './pages/AppsPage';
 import useAppStore from './store/useAppStore';
 
 function ProtectedRoute({ children }) {
@@ -20,7 +21,7 @@ export default function App() {
           path="/apps"
           element={
             <ProtectedRoute>
-              <div>Apps List (coming soon)</div>
+              <AppsPage />
             </ProtectedRoute>
           }
         />

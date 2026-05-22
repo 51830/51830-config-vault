@@ -1,11 +1,17 @@
 import { create } from 'zustand';
 import apiClient from '../api/client';
 
-const useAppStore = create((set) => ({
+const useAppStore = create((set, get) => ({
   token: localStorage.getItem('token') || null,
   user: JSON.parse(localStorage.getItem('user') || 'null'),
   isAuthenticated: !!localStorage.getItem('token'),
 
+  // Apps state
+  apps: [],
+  totalApps: 0,
+  appsLoading: false,
+
+  // Auth actions
   login: async (username, password) => {
     const response = await apiClient.post('/api/v1/auth/login', {
       username,
@@ -23,6 +29,29 @@ const useAppStore = create((set) => ({
     localStorage.removeItem('user');
     set({ token: null, user: null, isAuthenticated: false });
     window.location.href = '/login';
+  },
+
+  // Apps actions
+  fetchApps: async (page = 1, perPage = 20, search = '') => {
+    set({ appsLoading: true });
+    try {
+      const params = { page, per_page: perPage };
+      if (search) params.search = search;
+      const response = await apiClient.get('/api/v1/apps', { params });
+      set({ apps: response.data.items, totalApps: response.data.total, appsLoading: false });
+    } catch (err) {
+      set({ appsLoading: false });
+      throw err;
+    }
+  },
+
+  createApp: async (data) => {
+    const response = await apiClient.post('/api/v1/apps', data);
+    return response.data;
+  },
+
+  deleteApp: async (id) => {
+    await apiClient.delete(`/api/v1/apps/${id}`);
   },
 }));
 
