@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import AppsPage from './pages/AppsPage';
 import AppDetailPage from './pages/AppDetailPage';
+import UploadPage from './pages/UploadPage';
 import useAppStore from './store/useAppStore';
 
 function ProtectedRoute({ children }) {
@@ -38,7 +39,7 @@ export default function App() {
           path="/apps/:id/upload"
           element={
             <ProtectedRoute>
-              <div>Upload Page (coming soon)</div>
+              <UploadPage />
             </ProtectedRoute>
           }
         />

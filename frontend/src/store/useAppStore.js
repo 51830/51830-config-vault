@@ -77,6 +77,36 @@ const useAppStore = create((set, get) => ({
     const response = await apiClient.get(`/api/v1/apps/${id}`);
     return response.data;
   },
+
+  // Upload actions
+  uploadConfig: async (appId, file, note) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('note', note || '');
+    const response = await apiClient.post(`/api/v1/apps/${appId}/upload`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  },
+
+  fetchConfigItems: async (configId, selectedOnly = false) => {
+    const params = { per_page: 500 };
+    if (selectedOnly) params.selected_only = true;
+    const response = await apiClient.get(`/api/v1/configs/${configId}/items`, { params });
+    return response.data;
+  },
+
+  updateConfigItem: async (itemId, data) => {
+    const response = await apiClient.put(`/api/v1/configs/items/${itemId}`, data);
+    return response.data;
+  },
+
+  bulkSelectItems: async (configId, selectedKeys) => {
+    const response = await apiClient.put(`/api/v1/configs/${configId}/items/bulk-select`, {
+      selected_keys: selectedKeys,
+    });
+    return response.data;
+  },
 }));
 
 export default useAppStore;
