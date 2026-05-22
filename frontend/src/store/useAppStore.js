@@ -53,6 +53,30 @@ const useAppStore = create((set, get) => ({
   deleteApp: async (id) => {
     await apiClient.delete(`/api/v1/apps/${id}`);
   },
+
+  // Config files state
+  configFiles: [],
+  totalConfigFiles: 0,
+  configFilesLoading: false,
+
+  // Detail actions
+  fetchConfigFiles: async (appId, page = 1, perPage = 50) => {
+    set({ configFilesLoading: true });
+    try {
+      const response = await apiClient.get(`/api/v1/apps/${appId}/configs`, {
+        params: { page, per_page: perPage },
+      });
+      set({ configFiles: response.data.items, totalConfigFiles: response.data.total, configFilesLoading: false });
+    } catch (err) {
+      set({ configFilesLoading: false });
+      throw err;
+    }
+  },
+
+  fetchApp: async (id) => {
+    const response = await apiClient.get(`/api/v1/apps/${id}`);
+    return response.data;
+  },
 }));
 
 export default useAppStore;
