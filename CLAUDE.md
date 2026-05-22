@@ -66,7 +66,8 @@ backend/app/
 2. Implementasi sesuai steps di issue
 3. Rebuild/restart container jika perlu
 4. Verifikasi dengan perintah di bagian Verification issue
-5. **WAJIB: git add, git commit, git push ke origin/main**
+5. **WAJIB: update comment di GitHub issue dengan checklist hasil verifikasi** — setiap item yang lulus diubah dari `- [ ]` menjadi `- [x]`, gunakan `gh issue comment <number> --body "..."` dengan isi comment berisi checklist yang sudah dicentang
+6. **WAJIB: git add, git commit, git push ke origin/main**
 6. **WAJIB: tutup issue dengan `gh issue close <number> -c "..."`**
 
 ## Catatan Khusus
