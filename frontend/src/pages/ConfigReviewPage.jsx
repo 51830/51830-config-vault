@@ -29,25 +29,32 @@ export default function ConfigReviewPage() {
     load();
   }, [configId, fetchConfigItems]);
 
-  const handleToggleSelect = useCallback(async (itemId) => {
-    setItems((prev) =>
-      prev.map((i) => (i.id === itemId ? { ...i, is_selected: !i.is_selected } : i))
-    );
-  }, []);
+  const tableData = items.map((item) => ({
+    key: item.key_path,
+    value: item.value_preview || item.value || '',
+    is_sensitive: item.is_sensitive,
+    is_selected: item.is_selected,
+  }));
 
-  const handleToggleSensitive = useCallback(async (itemId) => {
-    const item = items.find((i) => i.id === itemId);
-    if (!item) return;
-    const newSensitive = !item.is_sensitive;
+  const handleSelectionChange = (keys) => {
     setItems((prev) =>
-      prev.map((i) => (i.id === itemId ? { ...i, is_sensitive: newSensitive } : i))
+      prev.map((item) => ({
+        ...item,
+        is_selected: keys.includes(item.key_path),
+      }))
     );
+  };
+
+  const handleValueEdit = useCallback(async (key, value) => {
+    const item = items.find((i) => i.key_path === key);
+    if (!item) return;
     try {
-      await updateConfigItem(itemId, { is_sensitive: newSensitive });
-    } catch (err) {
+      await updateConfigItem(item.id, { value });
       setItems((prev) =>
-        prev.map((i) => (i.id === itemId ? { ...i, is_sensitive: !newSensitive } : i))
+        prev.map((i) => (i.key_path === key ? { ...i, value } : i))
       );
+    } catch (err) {
+      setError(err.response?.data?.detail || 'Failed to update value');
     }
   }, [items, updateConfigItem]);
 
@@ -102,9 +109,9 @@ export default function ConfigReviewPage() {
         <div className="loading">Loading items...</div>
       ) : (
         <KeyValueTable
-          items={items}
-          onToggleSelect={handleToggleSelect}
-          onToggleSensitive={handleToggleSensitive}
+          data={tableData}
+          onSelectionChange={handleSelectionChange}
+          onValueEdit={handleValueEdit}
         />
       )}
 
