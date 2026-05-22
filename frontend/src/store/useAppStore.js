@@ -119,6 +119,36 @@ const useAppStore = create((set, get) => ({
     });
     return response.data;
   },
+
+  // Users state
+  users: [],
+  usersLoading: false,
+
+  // Users actions
+  fetchUsers: async () => {
+    set({ usersLoading: true });
+    try {
+      const response = await apiClient.get('/api/v1/users');
+      set({ users: response.data, usersLoading: false });
+    } catch (err) {
+      set({ usersLoading: false });
+      throw err;
+    }
+  },
+
+  createUser: async (data) => {
+    const response = await apiClient.post('/api/v1/users', data);
+    return response.data;
+  },
+
+  updateUserRole: async (userId, role) => {
+    const response = await apiClient.put(`/api/v1/users/${userId}`, { role });
+    return response.data;
+  },
+
+  deleteUser: async (userId) => {
+    await apiClient.delete(`/api/v1/users/${userId}`);
+  },
 }));
 
 export default useAppStore;

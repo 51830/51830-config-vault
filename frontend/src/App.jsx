@@ -6,6 +6,8 @@ import AppDetailPage from './pages/AppDetailPage';
 import UploadPage from './pages/UploadPage';
 import ConfigReviewPage from './pages/ConfigReviewPage';
 import DiffPage from './pages/DiffPage';
+import UsersPage from './pages/UsersPage';
+import Navbar from './components/Navbar';
 import useAppStore from './store/useAppStore';
 
 function ProtectedRoute({ children }) {
@@ -14,6 +16,23 @@ function ProtectedRoute({ children }) {
     return <Navigate to="/login" replace />;
   }
   return children;
+}
+
+function AdminRoute({ children }) {
+  const user = useAppStore((state) => state.user);
+  if (user?.role !== 'admin') {
+    return <Navigate to="/apps" replace />;
+  }
+  return children;
+}
+
+function AppLayout({ children }) {
+  return (
+    <div className="app-layout">
+      <Navbar />
+      <main className="main-content">{children}</main>
+    </div>
+  );
 }
 
 export default function App() {
@@ -25,7 +44,9 @@ export default function App() {
           path="/apps"
           element={
             <ProtectedRoute>
-              <AppsPage />
+              <AppLayout>
+                <AppsPage />
+              </AppLayout>
             </ProtectedRoute>
           }
         />
@@ -33,7 +54,9 @@ export default function App() {
           path="/apps/:id"
           element={
             <ProtectedRoute>
-              <AppDetailPage />
+              <AppLayout>
+                <AppDetailPage />
+              </AppLayout>
             </ProtectedRoute>
           }
         />
@@ -41,7 +64,9 @@ export default function App() {
           path="/apps/:id/upload"
           element={
             <ProtectedRoute>
-              <UploadPage />
+              <AppLayout>
+                <UploadPage />
+              </AppLayout>
             </ProtectedRoute>
           }
         />
@@ -49,7 +74,9 @@ export default function App() {
           path="/apps/:id/review/:configId"
           element={
             <ProtectedRoute>
-              <ConfigReviewPage />
+              <AppLayout>
+                <ConfigReviewPage />
+              </AppLayout>
             </ProtectedRoute>
           }
         />
@@ -57,7 +84,21 @@ export default function App() {
           path="/apps/:id/diff/:configId"
           element={
             <ProtectedRoute>
-              <DiffPage />
+              <AppLayout>
+                <DiffPage />
+              </AppLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                <AppLayout>
+                  <UsersPage />
+                </AppLayout>
+              </AdminRoute>
             </ProtectedRoute>
           }
         />

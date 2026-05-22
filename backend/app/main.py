@@ -8,6 +8,7 @@ from app.routers import apps as apps_router
 from app.routers import configs as configs_router
 from app.routers import config_items as config_items_router
 from app.routers import export as export_router
+from app.routers import users as users_router
 from app.seed import seed_admin
 
 app = FastAPI(title="Config Vault API")
@@ -27,6 +28,7 @@ app.include_router(apps_router.router)
 app.include_router(configs_router.router)
 app.include_router(config_items_router.router)
 app.include_router(export_router.router)
+app.include_router(users_router.router)
 
 
 @app.on_event("startup")
