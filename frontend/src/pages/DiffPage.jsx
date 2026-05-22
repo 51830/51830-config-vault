@@ -18,6 +18,9 @@ export default function DiffPage() {
     const load = async () => {
       setLoading(true);
       try {
+        const configsResult = await fetchConfigFiles(appId, 1, 100);
+        const currentConfig = configsResult.items.find((cf) => cf.id === parseInt(configId));
+
         const currentResult = await fetchItemsForDiff(configId);
         const currentMap = {};
         currentResult.items.forEach((item) => {
@@ -27,7 +30,6 @@ export default function DiffPage() {
         let compareMap = {};
         if (compareVersion) {
           const vNum = parseInt(compareVersion.replace('v', ''));
-          const configsResult = await fetchConfigFiles(appId, 1, 100);
           const compareConfig = configsResult.items.find((cf) => cf.version === vNum);
           if (compareConfig) {
             const compareResult = await fetchItemsForDiff(compareConfig.id);
@@ -38,7 +40,7 @@ export default function DiffPage() {
           setCompareVersionData({ version: vNum });
         }
 
-        setCurrentVersion({ items: currentResult.items });
+        setCurrentVersion({ version: currentConfig?.version || '?', items: currentResult.items });
 
         const added = [];
         const removed = [];
@@ -86,7 +88,7 @@ export default function DiffPage() {
       </div>
 
       <div className="diff-info">
-        <span className="version-badge">Current: v{currentVersion?.items?.[0]?.config_file_id || '?'}</span>
+        <span className="version-badge">Current: v{currentVersion?.version || '?'}</span>
         {compareVersionData && (
           <span className="version-badge compare">Comparing with: v{compareVersionData.version}</span>
         )}
@@ -104,7 +106,7 @@ export default function DiffPage() {
                 {diffs.added.map((d) => (
                   <tr key={d.key} className="diff-added">
                     <td><code>{d.key}</code></td>
-                    <td><code>{d.value}</code></td>
+                    <td><code>{d.value ?? ''}</code></td>
                   </tr>
                 ))}
               </tbody>
@@ -123,7 +125,7 @@ export default function DiffPage() {
                 {diffs.removed.map((d) => (
                   <tr key={d.key} className="diff-removed">
                     <td><code>{d.key}</code></td>
-                    <td><code>{d.value}</code></td>
+                    <td><code>{d.value ?? ''}</code></td>
                   </tr>
                 ))}
               </tbody>
@@ -142,8 +144,8 @@ export default function DiffPage() {
                 {diffs.changed.map((d) => (
                   <tr key={d.key} className="diff-changed">
                     <td><code>{d.key}</code></td>
-                    <td className="old-value"><code>{d.oldValue}</code></td>
-                    <td className="new-value"><code>{d.newValue}</code></td>
+                    <td className="old-value"><code>{d.oldValue ?? ''}</code></td>
+                    <td className="new-value"><code>{d.newValue ?? ''}</code></td>
                   </tr>
                 ))}
               </tbody>
