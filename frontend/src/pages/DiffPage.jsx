@@ -18,8 +18,9 @@ export default function DiffPage() {
     const load = async () => {
       setLoading(true);
       try {
-        const configsResult = await fetchConfigFiles(appId, 1, 100);
-        const currentConfig = configsResult.items.find((cf) => cf.id === parseInt(configId));
+        await fetchConfigFiles(appId, 1, 100);
+        const cfList = useAppStore.getState().configFiles;
+        const currentConfig = cfList.find((cf) => cf.id === parseInt(configId));
 
         const currentResult = await fetchItemsForDiff(configId);
         const currentMap = {};
@@ -30,7 +31,7 @@ export default function DiffPage() {
         let compareMap = {};
         if (compareVersion) {
           const vNum = parseInt(compareVersion.replace('v', ''));
-          const compareConfig = configsResult.items.find((cf) => cf.version === vNum);
+          const compareConfig = cfList.find((cf) => cf.version === vNum);
           if (compareConfig) {
             const compareResult = await fetchItemsForDiff(compareConfig.id);
             compareResult.items.forEach((item) => {
