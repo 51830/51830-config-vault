@@ -5,8 +5,10 @@ from app.parsers.json_parser import JsonParser
 from app.parsers.toml_parser import TomlParser
 from app.parsers.yaml_parser import YamlParser
 from app.parsers.php_parser import PhpParser
+from app.parsers.registry import ParserRegistry, registry
 
 __all__ = [
     "BaseParser", "EnvParser", "IniParser", "JsonParser",
     "TomlParser", "YamlParser", "PhpParser",
+    "ParserRegistry", "registry",
 ]
